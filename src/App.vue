@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-05-06 14:33:04
- * @LastEditTime: 2022-05-06 17:50:22
+ * @LastEditTime: 2022-05-06 18:34:23
  * @LastEditors: Do not edit
  * @Description: 
 -->
@@ -39,7 +39,12 @@ export default {
       columns: [
         {
           label: '姓名', align: 'center', prop: 'name',
-          render: (h, { row }) => {
+          renderHeader: (h, { row }) => {
+            console.log(row, '=renderHeader=');
+            return <span> 姓名 + { row.name } </span>
+          },
+          renderCell: (h, { row }) => {
+            console.log(row, '=render=');
             return <span> {row.name} </span>
           }
         },
