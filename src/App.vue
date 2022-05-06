@@ -1,28 +1,75 @@
+<!--
+ * @Author: shiliangL
+ * @Date: 2022-05-06 14:33:04
+ * @LastEditTime: 2022-05-06 17:50:22
+ * @LastEditors: Do not edit
+ * @Description: 
+-->
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Button
+      type="primary"
+      @click="OpenElDialog"
+    > 测试 </Button>
+
+    <DvaTable
+      border
+      stripe
+      :maxHeight="400"
+      :loading="true"
+      ref="DvaTable"
+      :data="tableData"
+      :columns="columns"
+    ></DvaTable>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  data() {
+    return {
+      tableData: new Array(240).fill({
+        date: '100',
+        name: '王小虎1',
+        address: '上海市普陀区金沙江路 151800 弄'
+      })
+      ,
+      columns: [
+        {
+          label: '姓名', align: 'center', prop: 'name',
+          render: (h, { row }) => {
+            return <span> {row.name} </span>
+          }
+        },
+        { label: '时间', align: 'center', prop: 'date' },
+        { label: '地址', align: 'center', prop: 'address' },
+      ],
+    }
+  },
+  mounted() {
+    console.log(this.$refs['DvaTable']);
+  },
+  methods: {
+    OpenElDialog() {
+      this.$OpenElDialog({
+        props: {},
+        modalProps: {
+          width: "520px",
+          title: '详情信息1'
+        },
+        methods: {
+          refresh: () => {
+
+          }
+        },
+        content: () => import('@/pages/about'),
+      })
+    }
+  },
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
