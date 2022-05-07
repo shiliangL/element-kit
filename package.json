@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "remove": "rimraf node_modules",
     "dev": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build:lib": "vue-cli-service build --target lib --name element-kit --dest lib ./src/package/index.js"
+    "build:lib_webpack": "webpack -c build.webpack.component",
+    "build:lib_rollup": "rollup -c build.rollup.component.js",
+    "build:lib": "vue-cli-service build --target lib --name element-kit --dest lib ./src/packages/index.js"
   },
   "dependencies": {
     "core-js": "^3.8.3",
@@ -15,15 +18,31 @@
     "vue": "^2.6.14"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
+    "@babel/core": "^7.17.10",
     "@babel/eslint-parser": "^7.12.16",
+    "@babel/preset-env": "^7.17.10",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "autoprefixer": "^10.4.7",
+    "babel-loader": "^8.2.5",
     "babel-plugin-component": "^1.1.1",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.1",
+    "cssnano": "^5.1.7",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "vue-template-compiler": "^2.6.14"
+    "mini-css-extract-plugin": "^2.6.0",
+    "node-sass": "^7.0.1",
+    "postcss": "^8.4.13",
+    "postcss-loader": "^6.2.1",
+    "rollup": "^2.72.0",
+    "sass-loader": "^12.6.0",
+    "terser-webpack-plugin": "^5.3.1",
+    "vue-loader": "^15.9.8",
+    "vue-template-compiler": "^2.6.14",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
   },
   "eslintConfig": {
     "root": true,

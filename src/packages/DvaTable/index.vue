@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-05-06 15:09:56
- * @LastEditTime: 2022-05-06 21:20:12
+ * @LastEditTime: 2022-05-07 09:15:32
  * @LastEditors: Do not edit
  * @Description: 封装表格组件组件
 -->
@@ -72,14 +72,6 @@ export default {
                   render: item.renderCell,
                 }
               }) : h('span', {}, row[column.property])
-              //   const tableHeader = item.renderHeader ? h('RenderCustom', {
-              //     slot: 'header',
-              //     props: {
-              //       row,
-              //       index: $index,
-              //       render: item.renderHeader,
-              //     }
-              //   }) : null
               return tableCell
             }
           },

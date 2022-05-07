@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-05-06 14:33:04
- * @LastEditTime: 2022-05-06 18:34:23
+ * @LastEditTime: 2022-05-07 09:17:17
  * @LastEditors: Do not edit
  * @Description: 
 -->
@@ -30,7 +30,7 @@ export default {
   name: 'App',
   data() {
     return {
-      tableData: new Array(240).fill({
+      tableData: new Array(10).fill({
         date: '100',
         name: '王小虎1',
         address: '上海市普陀区金沙江路 151800 弄'
@@ -39,12 +39,7 @@ export default {
       columns: [
         {
           label: '姓名', align: 'center', prop: 'name',
-          renderHeader: (h, { row }) => {
-            console.log(row, '=renderHeader=');
-            return <span> 姓名 + { row.name } </span>
-          },
           renderCell: (h, { row }) => {
-            console.log(row, '=render=');
             return <span> {row.name} </span>
           }
         },
