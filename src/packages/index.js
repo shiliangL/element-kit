@@ -6,9 +6,9 @@
  * @Description:
  */
 
-const { version } = require('../../package.json');
-import DvaTable from './dvaTable';
-import DvaDialog from './dvaDialog';
+const { version } = require('../../package.json')
+import DvaTable from './dvaTable'
+import DvaDialog from './dvaDialog'
 // const packageList = {}
 // // eslint-disable-next-line no-useless-escape
 // const files = require.context('./', true, /\index.vue$/)
@@ -19,27 +19,27 @@ import DvaDialog from './dvaDialog';
 // }
 
 // 组件
-const components = [DvaTable];
+const components = [DvaTable]
 
 // eslint-disable-next-line no-unused-vars
-const install = function (Vue, opts = {}) {
+const install = function(Vue, opts = {}) {
   // 使用弹窗插件
-  const { router, store, DvaTableConfig } = opts;
+  const { router, store, DvaTableConfig } = opts
   Vue.prototype.$DVATABLECONFIG = DvaTableConfig || {}
-  Vue.prototype.$DvaDialog = DvaDialog({ router, store });
+  Vue.prototype.$DvaDialog = DvaDialog({ router, store })
   // 注册组件
   components.forEach((component) => {
-    Vue.component(component.name, component);
-  });
+    Vue.component(component.name, component)
+  })
   // 其他配置
-};
+}
 
 // auto install
 if (typeof window !== 'undefined' && window.Vue) {
-  install(window.Vue);
+  install(window.Vue)
 }
 
 export default {
   version,
-  install,
-};
+  install
+}
