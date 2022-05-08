@@ -2,7 +2,13 @@
   "name": "element-kit",
   "version": "0.1.0",
   "private": true,
+  "main": "lib/index/index.js",
+  "style": "lib/style/index.css",
+  "files": [
+    "lib"
+  ],
   "scripts": {
+    "push": "npm publish",
     "remove": "rimraf node_modules",
     "dev": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
