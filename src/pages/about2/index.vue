@@ -1,10 +1,3 @@
-<!--
- * @Author: shiliangL
- * @Date: 2022-05-06 15:01:33
- * @LastEditTime: 2022-05-08 09:09:27
- * @LastEditors: Do not edit
- * @Description:
--->
 <template>
   <div>
     about me

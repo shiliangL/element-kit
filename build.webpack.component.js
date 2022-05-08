@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2022-05-07 09:03:15
- * @LastEditTime: 2022-05-07 10:40:53
+ * @LastEditTime: 2022-05-07 23:14:54
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -11,9 +11,10 @@ const TerserPlugin = require('terser-webpack-plugin');
 const { getComponentEntries } = require('./build/utils')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 module.exports = {
-  mode: 'none',
+  mode: 'production',
   entry: {
     ...getComponentEntries('src/packages')
   },
@@ -21,9 +22,16 @@ module.exports = {
     path: path.join(__dirname, '/lib'),
     filename: '[name]/index.js',
     libraryExport: 'default',
-    library: 'dva-datav',
+    library: 'element-kit',
     libraryTarget: 'umd',
     umdNamedDefine: true
+  },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': path.resolve(__dirname, '../src'),
+    },
+    modules: ['node_modules'],
   },
   externals: {
     vue: {
@@ -56,8 +64,8 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          'postcss-loader',
           'sass-loader',
+          'postcss-loader',
         ],
       },
       {
@@ -74,6 +82,7 @@ module.exports = {
   },
   plugins: [
     new VueLoaderPlugin(),
+    new ProgressBarPlugin(),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: 'style/[name].css',

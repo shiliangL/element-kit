@@ -1,14 +1,14 @@
 /*
  * @Author: shiliangL
  * @Date: 2022-05-06 14:37:27
- * @LastEditTime: 2022-05-06 15:45:59
+ * @LastEditTime: 2022-05-08 08:56:23
  * @LastEditors: Do not edit
  * @Description:
  */
 
 const { version } = require('../../package.json');
-import DvaTable from './DvaTable';
-import OpenElDialog from './OpenElDialog';
+import DvaTable from './dvaTable';
+import DvaDialog from './dvaDialog';
 // const packageList = {}
 // // eslint-disable-next-line no-useless-escape
 // const files = require.context('./', true, /\index.vue$/)
@@ -26,7 +26,7 @@ const install = function (Vue, opts = {}) {
   // 使用弹窗插件
   const { router, store, DvaTableConfig } = opts;
   Vue.prototype.$DVATABLECONFIG = DvaTableConfig || {}
-  Vue.prototype.$OpenElDialog = OpenElDialog({ router, store });
+  Vue.prototype.$DvaDialog = DvaDialog({ router, store });
   // 注册组件
   components.forEach((component) => {
     Vue.component(component.name, component);
