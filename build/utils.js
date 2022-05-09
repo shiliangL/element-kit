@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-05-06 14:12:03
- * @LastEditTime: 2022-05-07 09:42:00
+ * @LastEditTime: 2022-05-08 09:16:12
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -39,7 +39,7 @@ module.exports = {
       console.log(chalk.blue(`正在打包第${index}/${total}个文件...`))
     }
   },
-  getComponentEntries (path) {
+  getComponentEntries(path) {
     const files = fs.readdirSync(resolve(path))
     const componentEntries = files.reduce((ret, item) => {
       const itemPath = join(path, item)
@@ -59,4 +59,4 @@ module.exports = {
     return componentEntries
   }
 }
- 
+

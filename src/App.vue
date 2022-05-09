@@ -1,9 +1,9 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-05-06 14:33:04
- * @LastEditTime: 2022-05-07 09:17:17
+ * @LastEditTime: 2022-05-08 09:09:52
  * @LastEditors: Do not edit
- * @Description: 
+ * @Description:
 -->
 <template>
   <div id="app">
@@ -17,7 +17,7 @@
       @click="OpenElDialog"
     > 测试 </Button>
 
-    <DvaTable
+    <dva-table
       border
       stripe
       :maxHeight="400"
@@ -25,7 +25,7 @@
       ref="DvaTable"
       :data="tableData"
       :columns="columns"
-    ></DvaTable>
+    ></dva-table>
   </div>
 </template>
 
@@ -45,8 +45,7 @@ export default {
         date: '100',
         name: '王小虎1',
         address: '上海市普陀区金沙江路 151800 弄'
-      })
-      ,
+      }),
       columns: [
         {
           label: '姓名', align: 'center', prop: 'name',
@@ -55,19 +54,19 @@ export default {
           }
         },
         { label: '时间', align: 'center', prop: 'date' },
-        { label: '地址', align: 'center', prop: 'address' },
-      ],
+        { label: '地址', align: 'center', prop: 'address' }
+      ]
     }
   },
   mounted() {
-    console.log(this.$refs['DvaTable']);
+    console.log(this.$refs['DvaTable'])
   },
   methods: {
     OpenElDialog() {
-      this.$OpenElDialog({
+      this.$DvaDialog({
         props: {},
         modalProps: {
-          width: "520px",
+          width: '520px',
           title: '详情信息1'
         },
         methods: {
@@ -75,10 +74,10 @@ export default {
 
           }
         },
-        content: () => import('@/pages/about'),
+        content: () => import('@/pages/about')
       })
     }
-  },
+  }
 }
 </script>
 

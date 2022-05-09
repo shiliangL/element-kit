@@ -38,9 +38,9 @@ export default {
         const params = {
           row: opt.props.row,
           index: opt.props.index
-        };
-        if (opt.props.column) params.column = opt.props.column;
-        return opt.props.render(h, params);
+        }
+        if (opt.props.column) params.column = opt.props.column
+        return opt.props.render(h, params)
       }
     }
   },
@@ -50,13 +50,13 @@ export default {
     return h('Table', {
       ref: 'DvaTable',
       on: {
-        ...this.$listeners,
+        ...this.$listeners
       },
       props: {
         ...this.$attrs,
         ...$DVATABLECONFIG,
         data: data
-      },
+      }
     }, [
       columns.map((item) => {
         return h('TableColumn', {
@@ -69,16 +69,15 @@ export default {
                 props: {
                   row,
                   index: $index,
-                  render: item.renderCell,
+                  render: item.renderCell
                 }
               }) : h('span', {}, row[column.property])
               return tableCell
             }
-          },
+          }
         })
       })
     ])
   }
 }
 </script>
- 

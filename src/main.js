@@ -1,17 +1,17 @@
 /*
  * @Author: shiliangL
  * @Date: 2022-05-06 14:33:04
- * @LastEditTime: 2022-05-09 11:58:59
+ * @LastEditTime: 2022-05-09 12:34:22
  * @LastEditors: Do not edit
- * @Description:
+ * @Description: 
  */
-import Vue from 'vue';
-import App from './App.vue';
+import Vue from 'vue'
+import App from './App.vue'
 
 import kit from './packages';
 import InstantSearch from 'vue-instantsearch';
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 Vue.use(InstantSearch);
 
@@ -20,11 +20,11 @@ Vue.use(kit, {
   DvaTableConfig: {
     size: 'small',
     headerCellStyle: () => {
-      return { background: '#EDF5FF' };
-    },
-  },
-});
+      return { background: '#EDF5FF' }
+    }
+  }
+})
 
 new Vue({
-  render: (h) => h(App),
-}).$mount('#app');
+  render: (h) => h(App)
+}).$mount('#app')
