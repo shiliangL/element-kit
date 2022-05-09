@@ -7,6 +7,11 @@
 -->
 <template>
   <div id="app">
+
+    <AlgoliaSearch>
+
+    </AlgoliaSearch>
+
     <Button
       type="primary"
       @click="OpenElDialog"
@@ -26,8 +31,14 @@
 
 <script>
 
+
+import AlgoliaSearch from '@/components/AlgoliaSearch'
+
 export default {
   name: 'App',
+  components:{
+    AlgoliaSearch
+  },
   data() {
     return {
       tableData: new Array(10).fill({
