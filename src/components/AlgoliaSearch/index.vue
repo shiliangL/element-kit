@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-05-09 11:56:03
- * @LastEditTime: 2022-05-09 12:15:03
+ * @LastEditTime: 2022-05-09 12:30:17
  * @LastEditors: Do not edit
  * @Description: 
 -->
@@ -62,10 +62,13 @@ export default {
     initIndex() {
       const client = algoliasearch('JBIBURPW5N', '4200005a305d5870a76f949ba238ed79');
       this.index = client.initIndex(`Datav`);
+      console.log(this.index, '= this.index=');
     },
     querySearch(query, cb) {
       if (!query) return;
-      this.index.search({ query, hitsPerPage: 6 }, (err, res) => {
+      this.index.search(query, {
+        hitsPerPage: 10,
+      }, (err, res) => {
         if (err) {
           console.error(err);
           return;
