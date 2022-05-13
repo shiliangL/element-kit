@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2022-05-07 09:03:15
- * @LastEditTime: 2022-05-08 10:13:47
+ * @LastEditTime: 2022-05-13 11:53:28
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -31,7 +31,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      '@': path.resolve(__dirname, '../src')
+      '@': path.resolve(__dirname, './src')
     },
     modules: ['node_modules']
   },

@@ -1,46 +1,51 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-05-06 14:33:04
- * @LastEditTime: 2022-05-08 09:09:52
+ * @LastEditTime: 2022-05-13 09:07:36
  * @LastEditors: Do not edit
  * @Description:
 -->
 <template>
   <div id="app">
 
-    <AlgoliaSearch>
+    <algolia-search>
 
-    </AlgoliaSearch>
+    </algolia-search>
 
     <Button
       type="primary"
       @click="OpenElDialog"
-    > 测试 </Button>
+    > 测试 啊实打实的 </Button>
 
-    <dva-table
-      border
-      stripe
-      :maxHeight="400"
-      :loading="true"
-      ref="DvaTable"
-      :data="tableData"
-      :columns="columns"
-    ></dva-table>
+    <dva-calc-height :maxHeight.sync="maxHeight">
+      <dva-table
+        border
+        stripe
+        size="small"
+        :data="tableData"
+        :columns="columns"
+        :maxHeight="maxHeight"
+        slot="main"
+      >
+        {{ maxHeight }}
+      </dva-table>
+      <div slot="foot"></div>
+    </dva-calc-height>
   </div>
 </template>
 
 <script>
 
-
 import AlgoliaSearch from '@/components/AlgoliaSearch'
 
 export default {
   name: 'App',
-  components:{
+  components: {
     AlgoliaSearch
   },
   data() {
     return {
+      maxHeight: 0,
       tableData: new Array(10).fill({
         date: '100',
         name: '王小虎1',
@@ -48,18 +53,19 @@ export default {
       }),
       columns: [
         {
-          label: '姓名', align: 'center', prop: 'name',
+          label: '名称', align: 'center', prop: 'name',
           renderCell: (h, { row }) => {
-            return <span> {row.name} </span>
+            return <span> {row.name || row.id} </span>
           }
         },
-        { label: '时间', align: 'center', prop: 'date' },
-        { label: '地址', align: 'center', prop: 'address' }
+        {
+          label: '操作', align: 'center', prop: 'date',
+          renderCell: (h, { row }) => {
+            return <span> {row.name || row.id} </span>
+          }
+        }
       ]
     }
-  },
-  mounted() {
-    console.log(this.$refs['DvaTable'])
   },
   methods: {
     OpenElDialog() {

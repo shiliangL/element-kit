@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2022-05-06 14:33:04
- * @LastEditTime: 2022-05-08 10:43:14
+ * @LastEditTime: 2022-05-13 11:49:38
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -53,6 +53,11 @@ module.exports = {
   configureWebpack: (config) => {
     if (utils.isProduct) {
       config.externals = externals
+      config.mode = 'production'
+      config['performance'] = { // 打包文件大小配置
+        'maxEntrypointSize': 10000000,
+        'maxAssetSize': 30000000
+      }
     }
   },
   devServer: {

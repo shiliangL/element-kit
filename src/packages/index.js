@@ -1,14 +1,14 @@
 /*
  * @Author: shiliangL
  * @Date: 2022-05-06 14:37:27
- * @LastEditTime: 2022-05-08 08:56:23
+ * @LastEditTime: 2022-05-12 13:35:11
  * @LastEditors: Do not edit
  * @Description:
  */
-
 const { version } = require('../../package.json')
-import DvaTable from './dvaTable'
-import DvaDialog from './dvaDialog'
+import DvaDialog from '../dvaPlugin/dvaDialog'
+import DvaTable from './DvaTable'
+import DvaCalcHeight from './DvaCalcHeight'
 // const packageList = {}
 // // eslint-disable-next-line no-useless-escape
 // const files = require.context('./', true, /\index.vue$/)
@@ -19,7 +19,7 @@ import DvaDialog from './dvaDialog'
 // }
 
 // 组件
-const components = [DvaTable]
+const components = [DvaTable, DvaCalcHeight]
 
 // eslint-disable-next-line no-unused-vars
 const install = function(Vue, opts = {}) {

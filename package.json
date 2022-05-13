@@ -2,6 +2,7 @@
   "name": "element-kit",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "main": "lib/index/index.js",
   "style": "lib/style/index.css",
   "files": [
@@ -45,7 +46,7 @@
     "instantsearch.css": "^7.4.5",
     "eslint-plugin-vue": "^8.7.1",
     "mini-css-extract-plugin": "^2.6.0",
-    "node-sass": "^7.0.1",
+    "node-sass": "4.14.1",
     "postcss": "^8.4.13",
     "postcss-loader": "^6.2.1",
     "progress-bar-webpack-plugin": "^2.1.0",

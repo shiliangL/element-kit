@@ -1,14 +1,15 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-05-09 11:56:03
- * @LastEditTime: 2022-05-09 12:30:17
+ * @LastEditTime: 2022-05-13 09:54:43
  * @LastEditors: Do not edit
- * @Description: 
+ * @Description:
 -->
 <template>
   <autocomplete
     v-model="query"
     size="small"
+    :name="query"
     :popper-class="`algolia-search${ isEmpty ? ' is-empty' : '' }`"
     :fetch-suggestions="querySearch"
     :placeholder="placeholder"
@@ -40,8 +41,8 @@
 
 <script>
 
-import algoliasearch from 'algoliasearch';
-import { Autocomplete } from 'element-ui';
+import AlgoLiaSearch from 'algoliasearch'
+import { Autocomplete } from 'element-ui'
 export default {
   name: 'AlgoliaSearch',
   components: {
@@ -60,30 +61,25 @@ export default {
   },
   methods: {
     initIndex() {
-      const client = algoliasearch('JBIBURPW5N', '4200005a305d5870a76f949ba238ed79');
-      this.index = client.initIndex(`Datav`);
-      console.log(this.index, '= this.index=');
+      const client = AlgoLiaSearch('JBIBURPW5N', '4200005a305d5870a76f949ba238ed79')
+      this.index = client.initIndex(`Datav`)
     },
     querySearch(query, cb) {
-      if (!query) return;
+      if (!query) return
       this.index.search(query, {
-        hitsPerPage: 10,
-      }, (err, res) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        if (res.hits.length > 0) {
-          this.isEmpty = false;
-          cb(res.hits.map(hit => {
-            let content = hit._highlightResult.content.value.replace(/\s+/g, ' ');
-            const highlightStart = content.indexOf('<span class="algolia-highlight">');
+        hitsPerPage: 10
+      }).then(({ hits }) => {
+        if (hits.length > 0) {
+          this.isEmpty = false
+          const list = hits.map(hit => {
+            let content = hit._highlightResult.content.value.replace(/\s+/g, ' ')
+            const highlightStart = content.indexOf('<span class="algolia-highlight">')
             if (highlightStart > -1) {
-              const startEllipsis = highlightStart - 15 > 0;
+              const startEllipsis = highlightStart - 15 > 0
               content = (startEllipsis ? '...' : '') +
-                content.slice(Math.max(0, highlightStart - 15), content.length);
+                content.slice(Math.max(0, highlightStart - 15), content.length)
             } else if (content.indexOf('|') > -1) {
-              content = '';
+              content = ''
             }
             return {
               anchor: hit.anchor,
@@ -91,21 +87,23 @@ export default {
               highlightedCompo: hit._highlightResult.component.value,
               title: hit._highlightResult.title.value,
               content
-            };
-          }).concat({ img: true }));
+            }
+          })
+          console.log(list, '=list')
+          cb(list)
         } else {
-          this.isEmpty = true;
-          cb([{ isEmpty: true }]);
+          this.isEmpty = true
+          cb([{ isEmpty: true }])
         }
-      });
+      })
     },
     handleSelect(val) {
-      if (val.img || val.isEmpty) return;
-      const component = val.component || '';
-      const anchor = val.anchor;
-      this.$router.push(`/${this.lang}/component/${component}${anchor ? `#${anchor}` : ''}`);
+      if (val.img || val.isEmpty) return
+      const component = val.component || ''
+      const anchor = val.anchor
+      this.$router.push(`/${this.lang}/component/${component}${anchor ? `#${anchor}` : ''}`)
     }
-  },
+  }
 }
 </script>
 
