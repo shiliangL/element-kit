@@ -1,12 +1,13 @@
 /*
  * @Author: shiliangL
  * @Date: 2022-05-06 14:33:04
- * @LastEditTime: 2022-05-12 12:18:56
+ * @LastEditTime: 2022-05-13 15:05:04
  * @LastEditors: Do not edit
  * @Description:
  */
 import Vue from 'vue'
 import App from './App.vue'
+import './styles/index.scss'
 
 import kit from './packages'
 

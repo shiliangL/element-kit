@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-05-06 14:33:04
- * @LastEditTime: 2022-05-13 09:07:36
+ * @LastEditTime: 2022-05-13 15:18:36
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -24,7 +24,7 @@
         size="small"
         :data="tableData"
         :columns="columns"
-        :maxHeight="maxHeight"
+        :height="maxHeight"
         slot="main"
       >
         {{ maxHeight }}
@@ -52,6 +52,7 @@ export default {
         address: '上海市普陀区金沙江路 151800 弄'
       }),
       columns: [
+        { label: '序号', width: 50, type: 'index', index: (index) => { return index + 1 } },
         {
           label: '名称', align: 'center', prop: 'name',
           renderCell: (h, { row }) => {
