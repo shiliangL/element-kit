@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-06-06 17:02:37
- * @LastEditTime: 2022-06-06 18:04:22
+ * @LastEditTime: 2022-06-06 18:39:35
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -17,21 +17,25 @@
 
 <script>
 
-import china from '@/assets/json/china.json'
-const { echarts } = window
-
 export default {
   components: {
     ECharts: () => import('@/components/ECharts')
   },
   data() {
     return {
+      geoJson: {
+        features: []
+      },
+      parentInfo: [{
+        cityName: '全国',
+        code: 100000
+      }],
       currentIndex: -1,
       chartOptions: {}
     }
   },
-  mounted() {
-    echarts.registerMap('china', china)
+  created() {
+    this.getGeoJson(100000)
   },
   beforeDestroy() {
     if (this.chart) {
@@ -323,6 +327,7 @@ export default {
       this.setIntervalChart()
     },
     clickChart(params) {
+      // AMapUI
       console.log(params)
     },
     setIntervalChart() {
@@ -353,6 +358,25 @@ export default {
           dataIndex: this.currentIndex
         })
       }, 3000)
+    },
+    getGeoJson(adcode) {
+      const { AMapUI, echarts } = window
+      if (!AMapUI) return console.log('AMapUI 未加载,请刷新页面保证加载后运行')
+      AMapUI.loadUI(['geo/DistrictExplorer'], DistrictExplorer => {
+        const districtExplorer = new DistrictExplorer()
+        districtExplorer.loadAreaNode(adcode, (error, areaNode) => {
+          if (error) return console.error(error)
+          const Json = areaNode.getSubFeatures()
+          if (Json.length > 0) {
+            this.geoJson.features = Json
+            echarts.registerMap('china', this.geoJson)
+            console.log(this.geoJson, '=this.geoJson=')
+          } else if (Json.length === 0) {
+            this.geoJson.features = this.geoJson.features.filter(item => item.properties.adcode === adcode)
+            if (this.geoJson.features.length === 0) return
+          }
+        })
+      })
     }
   }
 }
