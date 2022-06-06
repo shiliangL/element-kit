@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2022-05-06 14:33:04
- * @LastEditTime: 2022-05-13 11:49:38
+ * @LastEditTime: 2022-06-02 10:09:44
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -13,7 +13,7 @@ const { externals } = require('./config/index')
 module.exports = {
   // publicPath: './',
   assetsDir: 'static',
-  outputDir: !utils.isProduct ? 'dist' : 'lib',
+  outputDir: 'dist',
   transpileDependencies: true,
   lintOnSave: !utils.isProduct,
   runtimeCompiler: true,

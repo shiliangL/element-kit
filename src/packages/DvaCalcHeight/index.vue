@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-05-12 11:11:32
- * @LastEditTime: 2022-05-13 15:21:13
+ * @LastEditTime: 2022-05-13 15:27:21
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -22,7 +22,7 @@ export default {
     // 余量fix一些场景一下需要减掉部分的高度 这里默认可以理解为 表头高度 + 余量
     prefix: {
       type: Number,
-      default: () => 40
+      default: () => 80
     },
     maxHeight: {
       type: Number,

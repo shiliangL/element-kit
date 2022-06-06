@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-05-06 15:09:56
- * @LastEditTime: 2022-05-07 09:15:32
+ * @LastEditTime: 2022-05-20 09:11:45
  * @LastEditors: Do not edit
  * @Description: 封装表格组件组件
 -->
@@ -64,7 +64,7 @@ export default {
             ...item
           },
           scopedSlots: {
-            default: ({ row, column, $index }) => {
+            default: !item.type ? ({ row, column, $index }) => {
               const tableCell = item.renderCell ? h('RenderCustom', {
                 props: {
                   row,
@@ -73,7 +73,7 @@ export default {
                 }
               }) : h('span', {}, row[column.property])
               return tableCell
-            }
+            } : null
           }
         })
       })
