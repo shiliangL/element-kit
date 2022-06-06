@@ -1,12 +1,12 @@
 /*
  * @Author: shiliangL
  * @Date: 2022-05-06 14:33:04
- * @LastEditTime: 2022-06-06 15:06:47
+ * @LastEditTime: 2022-06-06 17:03:39
  * @LastEditors: Do not edit
  * @Description:
  */
 import Vue from 'vue'
-import App from './App.vue'
+import App from './AppMap.vue'
 import './styles/index.scss'
 import 'element-ui/lib/theme-chalk/index.css'
 

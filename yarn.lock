@@ -1774,6 +1774,11 @@
   optionalDependencies:
     prettier "^1.18.2 || ^2.0.0"
 
+"@vue/composition-api@^1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.6.2.tgz#8e65cf60cd919f23649951ed14a67d43cd32131d"
+  integrity sha512-g6pCOaAB5Z987EwCBIDanRlramrgnWfrrYS8F/0axn2AL8EvyfAebDcLTSr48hac0G0rqC9ODp5LWaiupzl6Tw==
+
 "@vue/vue-loader-v15@npm:vue-loader@^15.9.7", vue-loader@^15.9.8:
   name "@vue/vue-loader-v15"
   version "15.9.8"
@@ -6317,6 +6322,11 @@ requires-port@^1.0.0:
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
+resize-detector@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/resize-detector/-/resize-detector-0.3.0.tgz#fe495112e184695500a8f51e0389f15774cb1cfc"
+  integrity sha512-R/tCuvuOHQ8o2boRP6vgx8hXCCy87H1eY9V5imBYeVNyNVpuL9ciReSccLj2gDcax9+2weXy3bc8Vv+NRXeEvQ==
+
 resize-observer-polyfill@^1.5.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
@@ -6676,11 +6686,6 @@ sockjs@^0.3.21:
     faye-websocket "^0.11.3"
     uuid "^8.3.2"
     websocket-driver "^0.7.4"
-
-sortablejs@1.10.2:
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.10.2.tgz#6e40364d913f98b85a14f6678f92b5c1221f5290"
-  integrity sha512-YkPGufevysvfwn5rfdlGyrGjt7/CRHwvRPogD/lC+TnvcN29jDpCifKP+rBqf+LRldfXSTh+0CGLcSg0VIxq3A==
 
 source-list-map@^2.0.0:
   version "2.0.1"
@@ -7096,6 +7101,11 @@ throttle-debounce@^1.0.1:
   resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-1.1.0.tgz#51853da37be68a155cb6e827b3514a3c422e89cd"
   integrity sha512-XH8UiPCQcWNuk2LYePibW/4qL97+ZQ1AN3FNXwZRBNPPowo/NRU5fAlDCSNBJIYCKbioZfuYtMhG4quqoJhVzg==
 
+throttle-debounce@^2.1.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-2.3.0.tgz#fd31865e66502071e411817e241465b3e9c372e2"
+  integrity sha512-H7oLPV0P7+jgvrk+6mwwwBDmxTaxnu9HMXmloNLXwnNO0ZxZ31Orah2n8lU1eMPvsaowP2CX+USCgyovXfdOFQ==
+
 through2@^2.0.0:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.5.tgz#01c1e39eb31d07cb7d03a96a70823260b23132cd"
@@ -7421,13 +7431,6 @@ vue@^2.6.14:
   version "2.6.14"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
   integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
-
-vuedraggable@^2.24.3:
-  version "2.24.3"
-  resolved "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-2.24.3.tgz#43c93849b746a24ce503e123d5b259c701ba0d19"
-  integrity sha512-6/HDXi92GzB+Hcs9fC6PAAozK1RLt1ewPTLjK0anTYguXLAeySDmcnqE8IC0xa7shvSzRjQXq3/+dsZ7ETGF3g==
-  dependencies:
-    sortablejs "1.10.2"
 
 watchpack@^2.3.1:
   version "2.3.1"

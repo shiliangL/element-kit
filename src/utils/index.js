@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2022-05-07 10:21:38
- * @LastEditTime: 2022-05-12 11:17:35
+ * @LastEditTime: 2022-06-06 17:31:36
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -31,4 +31,17 @@ export function debounce(func, wait = 300, immediate = false) {
       }, wait)
     }
   }
+}
+
+export function deepMerge(target, merged) {
+  for (const key in merged) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (merged.hasOwnProperty(key)) {
+      target[key] =
+        target[key] && target[key].toString() === '[object Object]'
+          ? deepMerge(target[key], merged[key])
+          : (target[key] = merged[key])
+    }
+  }
+  return target
 }
