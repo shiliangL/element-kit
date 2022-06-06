@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-06-06 17:02:37
- * @LastEditTime: 2022-06-06 18:39:35
+ * @LastEditTime: 2022-06-06 19:25:05
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -370,6 +370,7 @@ export default {
           if (Json.length > 0) {
             this.geoJson.features = Json
             echarts.registerMap('china', this.geoJson)
+            this.chart && this.chart.resize()
             console.log(this.geoJson, '=this.geoJson=')
           } else if (Json.length === 0) {
             this.geoJson.features = this.geoJson.features.filter(item => item.properties.adcode === adcode)
