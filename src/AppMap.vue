@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2022-06-06 17:02:37
- * @LastEditTime: 2022-06-06 19:25:05
+ * @LastEditTime: 2022-06-07 10:18:18
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -46,6 +46,7 @@ export default {
   methods: {
     ready(chart) {
       this.chart = chart
+      if (!this) return
       const geoCoordMap = {
         北京: [116.46, 39.92],
         上海: [121.48, 31.22],
@@ -322,13 +323,12 @@ export default {
           }
         ]
       }
-
+      this.chart.off('click', () => {})
       this.chart.on('click', (e) => this.clickChart(e))
-      this.setIntervalChart()
+      // this.setIntervalChart()
     },
-    clickChart(params) {
-      // AMapUI
-      console.log(params)
+    clickChart({ data }) {
+      this.getGeoJson(data.cityCode || 100000)
     },
     setIntervalChart() {
       clearInterval(this.autoHightLightTimer)
@@ -362,6 +362,7 @@ export default {
     getGeoJson(adcode) {
       const { AMapUI, echarts } = window
       if (!AMapUI) return console.log('AMapUI 未加载,请刷新页面保证加载后运行')
+      this.chart && this.chart.clear()
       AMapUI.loadUI(['geo/DistrictExplorer'], DistrictExplorer => {
         const districtExplorer = new DistrictExplorer()
         districtExplorer.loadAreaNode(adcode, (error, areaNode) => {
@@ -370,14 +371,87 @@ export default {
           if (Json.length > 0) {
             this.geoJson.features = Json
             echarts.registerMap('china', this.geoJson)
-            this.chart && this.chart.resize()
-            console.log(this.geoJson, '=this.geoJson=')
           } else if (Json.length === 0) {
             this.geoJson.features = this.geoJson.features.filter(item => item.properties.adcode === adcode)
             if (this.geoJson.features.length === 0) return
           }
+          this.generateOption()
         })
       })
+    },
+    generateOption() {
+      console.log(this.geoJson.features, '=this.geoJson.features=')
+      const mapData = this.geoJson.features.map(item => ({
+        name: item.properties.name,
+        value: Math.random() * 1000,
+        cityCode: item.properties.adcode
+      }))
+      const mapSeriesData = mapData.sort((a, b) => (b.value - a.value))
+      this.chartOptions = {
+        animationEasing: 'elasticOut',
+        animationDelayUpdate: (k) => 5 * k,
+        backgroundColor: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 1,
+          y2: 1,
+          colorStops: [{
+            offset: 0, color: '#0f378f' // 0% 处的颜色
+          }, {
+            offset: 1, color: '#00091a' // 100% 处的颜色
+          }]
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: p => {
+            let val = p.value
+            if (!val) val = 0
+            return p.name + ':' + val.toFixed(2)
+          }
+        },
+        title: {
+          show: true,
+          left: 'center',
+          top: '20',
+          text: this.parentInfo[this.parentInfo.length - 1].cityName,
+          textStyle: {
+            fontSize: 18,
+            color: '#ccc'
+          }
+        },
+        series: [{
+          name: '地图',
+          type: 'map',
+          map: 'china',
+          roam: true, // 是否可缩放
+          zoom: 1, // 缩放比例
+          data: mapSeriesData,
+          label: {
+            normal: {
+              show: false
+            },
+            emphasis: {
+              show: false
+            }
+          },
+          itemStyle: {
+            normal: {
+              areaColor: '#3a7fd5',
+              borderColor: '#0a53e9', // 线
+              shadowColor: '#092f8f', // 外发光
+              shadowBlur: 20
+            },
+            emphasis: {
+              areaColor: '#0a2dae'
+            }
+          },
+          layoutSize: 430,
+          layoutCenter: ['50%', '50%'], // 属性定义地图中心在屏幕中的位置，一般结合layoutSize 定义地图的大小
+          animationDelay: (idx) => idx * 10
+        }]
+      }
+      this.chart && this.chart.resize()
     }
   }
 }
