@@ -25,6 +25,7 @@
     "resize-detector": "^0.3.0",
     "throttle-debounce": "^2.1.0",
     "vue": "^2.6.14",
+    "vue-drag-resize": "^1.5.4",
     "vue-grid-layout": "^2.3.12"
   },
   "devDependencies": {

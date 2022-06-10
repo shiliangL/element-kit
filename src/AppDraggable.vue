@@ -5,65 +5,79 @@
         :key="index"
         draggable="true"
         unselectable="on"
-        @drag="elementDrag"
         class="draggable-item-row"
-        @dragend="elementDragend($event,element)"
+        @dragstart="dragstart($event, element);"
         v-for="(element,index) in elementList"
       > {{ element.title }}</div>
     </div>
     <div
       class="box-render"
       ref="content"
+      @drop="dropHandler($event)"
+      @dragover="dragoverHandler($event)"
     >
-      <grid-layout
-        ref="gridLayout"
-        :layout.sync="layout"
-        :col-num="colNum"
-        :row-height="34"
-        :margin="[2, 2]"
-        :is-draggable="true"
-        :is-resizable="true"
-        :vertical-compact="true"
-        :use-css-transforms="true"
+
+      <VueDragResize
+        v-for="(item) in elements"
+        parentLimitation
+        :key="item.id"
+        :w="200"
+        :h="200"
+        :y="item.top"
+        :x="item.left"
+        :isActive="item.isActive"
+        :isDraggable="item.isDraggable"
+        @clicked="onActivated(item)"
+        @deactivated="deactivated(item)"
       >
-        <grid-item
-          :key="item.i"
-          :x="item.x"
-          :y="item.y"
-          :w="item.w"
-          :h="item.h"
-          :i="item.i"
-          v-for="item in layout"
-        >
-          <div class="grid-item-component">
-            <div class="component-desc"> {{ item.title }}</div>
-            <div class="component-desc"> {{ item.value }}</div>
-            <div class="component-desc"> {{ item.unit }}</div>
-          </div>
-        </grid-item>
-      </grid-layout>
+        <!-- @resizing="resize($event,item)"
+          @dragging="resize($event,item)" -->
+        <div :key="item.id">
+          <h3> 组件名称 {{ item.name }} </h3>
+          <component
+            :is="item.componentKey"
+            v-model="item.value"
+          ></component>
+        </div>
+      </VueDragResize>
+
+    </div>
+    <div class="box-edit-area">
+      属性编辑区域
+      <div
+        :key="index"
+        draggable="true"
+        unselectable="on"
+        class="draggable-item-row"
+        @dragstart="dragstart($event, element);"
+        v-for="(element,index) in elementList"
+      > {{ element.title }}</div>
     </div>
   </div>
 </template>
 
 <script>
 
-import { GridLayout, GridItem } from 'vue-grid-layout'
-const mouseXY = { 'x': null, 'y': null }
-const DragPos = { 'x': null, 'y': null, 'w': 1, 'h': 1, 'i': null }
+// import { GridLayout, GridItem } from 'vue-grid-layout'
+import VueDragResize from 'vue-drag-resize'
 
 export default {
   components: {
-    GridItem,
-    GridLayout
+    // GridItem,
+    // GridLayout
+    VueDragResize
   },
   data() {
     return {
-      colNum: 6,
+      width: 0,
+      height: 0,
+      top: 0,
+      left: 0,
+      elements: [],
       elementList: [
         {
-          element: 'el-input',
-          title: '单行文本',
+          componentKey: 'el-input',
+          title: '输入框',
           value: '',
           placeholder: '请输入',
           style: { width: '100%' },
@@ -71,53 +85,42 @@ export default {
           draggable: false
         },
         {
-          title: '多行文本',
-          value: '',
-          placeholder: '请输入',
-          style: { width: '100%' },
-          readonly: false,
-          draggable: false
-        },
-        {
-          title: '密码',
-          value: '',
-          placeholder: '请输入',
-          style: { width: '100%' },
-          readonly: false,
-          draggable: false
-        },
-        {
-          title: '计数器',
-          value: '',
-          placeholder: '请输入',
-          style: { width: '100%' },
-          readonly: false,
-          draggable: false
-        },
-        {
-          title: '编辑器',
+          componentKey: 'el-card',
+          title: '卡片',
           value: '',
           placeholder: '请输入',
           style: { width: '100%' },
           readonly: false,
           draggable: false
         }
-      ],
-      layout: [
-
       ]
     }
   },
   mounted() {
-    document.addEventListener('dragover', this.setMouseXY, false)
-    this.$once('hook:beforeDestroy', () => {
-      document.removeEventListener('dragover', this.setMouseXY)
-    })
+
   },
   methods: {
-    setMouseXY(e) {
-      mouseXY.x = e.clientX
-      mouseXY.y = e.clientY
+    resize(newRect) {
+      console.log(newRect, '=newRect=')
+      // this.width = newRect.width
+      // this.height = newRect.height
+      // this.top = newRect.top
+      // this.left = newRect.left
+    },
+    resizeElement(newRect, item) {
+      console.log(newRect, '=newRect=')
+      // item.top = newRect.top
+      // item.left = newRect.left
+      // item.width = newRect.width
+      // item.height = newRect.height
+    },
+    onActivated(item) {
+      item.isActive = true
+      item.isDraggable = true
+    },
+    deactivated(item) {
+      item.isActive = false
+      item.isDraggable = false
     },
     generateGuid() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -126,73 +129,37 @@ export default {
         return v.toString(16)
       })
     },
-    elementDrag(e) {
-      // console.log(e, '=拖拽ing=')
-      let mouseInGrid = false
-      const parentRect = this.$refs['content'].getBoundingClientRect()
-      if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
-        mouseInGrid = true
-      }
-      if (!mouseInGrid) return
-      if (mouseInGrid === true && (this.layout.findIndex(item => item.i === 'drop')) === -1) {
-        this.layout.push({
-          w: 1,
-          h: 1,
-          i: 'drop',
-          x: (this.layout.length * 2) % (this.colNum || 12),
-          y: this.layout.length + (this.colNum || 12) // puts it at the bottom
-        })
-      }
-      const index = this.layout.findIndex(item => item.i === 'drop')
-      if (index !== -1) {
-        try {
-          this.$refs.gridLayout.$children[this.layout.length].$refs.item.style.display = 'none'
-        } catch {
-        }
-        const el = this.$refs.gridLayout.$children[index]
-        el.dragging = { 'top': mouseXY.y - parentRect.top, 'left': mouseXY.x - parentRect.left }
-        const new_pos = el.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left)
-        if (mouseInGrid === true) {
-          this.$refs.gridLayout.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, 1, 1)
-          DragPos.i = String(index)
-          DragPos.x = this.layout[index].x
-          DragPos.y = this.layout[index].y
-        }
-        if (mouseInGrid === false) {
-          this.$refs.gridLayout.dragEvent('dragend', 'drop', new_pos.x, new_pos.y, 1, 1)
-          this.layout = this.layout.filter(obj => obj.i !== 'drop')
-        }
-      }
+    dragstart(ev, { componentKey }) {
+      console.log(ev, '=拖拽开始=')
+      // Add this element's id to the drag payload so the drop handler will
+      // know which element to add to its tree
+      ev.dataTransfer.setData('text', componentKey)
+      ev.dataTransfer.dropEffect = 'copy'
+      // ev.dataTransfer.effectAllowed = 'move'
     },
-    elementDragend(e, item) {
-      console.log(e, item, '=拖拽结束=')
-      let mouseInGrid = false
-      const parentRect = this.$refs['content'].getBoundingClientRect()
-      if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
-        mouseInGrid = true
-      }
-      if (!mouseInGrid) return
-      if (mouseInGrid === true) {
-        this.$refs.gridLayout.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1)
-        this.layout = this.layout.filter(obj => obj.i !== 'drop')
-        this.layout.push({
-          unit: '',
-          value: '',
-          title: item.title,
-          element: item.element,
-          w: 1,
-          h: 1,
-          x: DragPos.x,
-          y: DragPos.y,
-          i: DragPos.i
-        })
-        this.$refs.gridLayout.dragEvent('dragend', DragPos.i, DragPos.x, DragPos.y, 1, 1)
-        try {
-          this.$refs.gridLayout.$children[this.layout.length].$refs.item.style.display = 'block'
-        } catch {
-          console.log('渲染报错')
-        }
-      }
+    dropHandler(ev) {
+      ev.preventDefault()
+      const componentKey = ev.dataTransfer.getData('text')
+      const offsetX = (ev.clientX)
+      const offsetY = (ev.clientY)
+      this.elements.push({
+        isActive: true,
+        isDraggable: true,
+        width: 200,
+        height: 200,
+        top: offsetY,
+        left: offsetX,
+        componentKey,
+        value: '请输入',
+        id: this.generateGuid()
+      })
+      // Get the id of the target and add the moved element to the target's DOM
+    },
+    dragoverHandler(ev) {
+      ev.preventDefault()
+      ev.stopPropagation()
+      // Set the dropEffect to move
+      ev.dataTransfer.dropEffect = 'move'
     }
   }
 }
@@ -207,19 +174,30 @@ export default {
   .box-render {
     flex: 1;
     margin: 10px;
+    align-items: stretch;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    position: relative;
     .vue-grid-item {
       border-radius: 2px;
       border: 1px solid #d7dae2;
     }
     .vue-grid-layout {
-      height: 100%;
-      width: 100%;
+      flex: 1;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+      position: absolute;
     }
   }
   .draggable-item-row {
-    width: 120px;
-    cursor: move;
+    padding: 10px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .box-draggable,
+  .box-edit-area {
+    width: 240px;
     padding: 10px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }
